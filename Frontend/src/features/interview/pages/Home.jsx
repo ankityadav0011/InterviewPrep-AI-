@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
+import { useAuth } from '../../auth/hooks/useAuth.js'
 import { useNavigate } from 'react-router'
 
 const Home = () => {
 
-    const { loading, generateReport,reports } = useInterview()
+    const { loading, generateReport, reports } = useInterview()
+    const { user, handleLogout } = useAuth()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
     const resumeInputRef = useRef()
@@ -16,6 +18,11 @@ const Home = () => {
         const resumeFile = resumeInputRef.current.files[ 0 ]
         const data = await generateReport({ jobDescription, selfDescription, resumeFile })
         navigate(`/interview/${data._id}`)
+    }
+
+    const handleLogoutClick = async () => {
+        await handleLogout()
+        navigate('/login')
     }
 
     if (loading) {
@@ -31,8 +38,15 @@ const Home = () => {
 
             {/* Page Header */}
             <header className='page-header'>
-                <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
-                <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
+                <div className='page-header__top'>
+                    <div>
+                        <h1>Create Your Custom <span className='highlight'>Interview Plan</span></h1>
+                        <p>Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
+                    </div>
+                    <button className='logout-btn' onClick={handleLogoutClick}>
+                        Logout
+                    </button>
+                </div>
             </header>
 
             {/* Main Card */}
