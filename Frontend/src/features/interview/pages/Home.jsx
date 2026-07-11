@@ -16,8 +16,14 @@ const Home = () => {
 
     const handleGenerateReport = async () => {
         const resumeFile = resumeInputRef.current.files[ 0 ]
+        if (!resumeFile && !selfDescription.trim()) {
+            return alert("Please upload a resume or enter a self description.")
+        }
+
         const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        navigate(`/interview/${data._id}`)
+        if (data?._id) {
+            navigate(`/interview/${data._id}`)
+        }
     }
 
     const handleLogoutClick = async () => {
