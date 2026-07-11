@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://interviewprep-ai-1-45lp.onrender.com",
     credentials: true
 }))
 
