@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "https://interviewprep-ai-1-1mim.onrender.com",
+    origin: "https://interviewprep-ai-wewr.onrender.com",
     credentials: true
 }))
 
